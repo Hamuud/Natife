@@ -14,7 +14,7 @@ struct PostsResponse: Codable {
 
 struct Post: Codable, Identifiable {
     let postId: Int
-    let timeshamp: Int
+    let timeshamp: Double
     let title: String
     let preview_text: String
     let likes_count: Int
@@ -37,6 +37,8 @@ struct ContentView: View {
     
     let jsonURL = "https://raw.githubusercontent.com/anton-natife/jsons/master/api/main.json"
     
+    let secondsInADay: Double = 60 * 60 * 24
+    
     var body: some View {
         NavigationView {
             List(posts.sorted(by: sortingOption.sortingComparator)) { post in
@@ -53,9 +55,14 @@ struct ContentView: View {
                             .lineLimit(isExpanded ? nil : 2)
                     
                         Spacer()
-                        
-                        Text("❤️ \(String(post.likes_count))")
-                            .bold()
+                        HStack {
+                            Text("❤️ \(String(post.likes_count))")
+                                .bold()
+                            
+                            Spacer()
+                            
+                            Text("\(Int(ceil((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
+                        }
                         Button(action: {
                             withAnimation{
                                 isExpanded.toggle()
