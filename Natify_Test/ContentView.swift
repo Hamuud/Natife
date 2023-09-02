@@ -18,6 +18,7 @@ struct Post: Codable, Identifiable {
     let title: String
     let preview_text: String
     let likes_count: Int
+
     let id = UUID()
 }
 
@@ -28,6 +29,7 @@ struct ContentView: View {
     @State private var selectedPost: Post?
     @State private var isExpanded = false
     @State private var sortingOption: SortingOption = .default
+    @State private var lineLimitStates: [UUID: Bool] = [:]
     
     enum SortingOption: String {
         case likes_count
@@ -52,7 +54,7 @@ struct ContentView: View {
                         Spacer()
                         
                         Text(post.preview_text)
-                            .lineLimit(isExpanded ? nil : 2)
+                            .lineLimit(lineLimitStates[post.id] == true ? nil : 2)
                     
                         Spacer()
                         HStack {
@@ -64,13 +66,11 @@ struct ContentView: View {
                             Text("\(Int(ceil((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
                         }
                         Button(action: {
-                            withAnimation{
-                                isExpanded.toggle()
-                            }
+                            toggleLineLimit(for: post)
                         }) {
-                            Text(isExpanded
-                                  ? "Collape"
-                                  : "Expand"
+                            Text(lineLimitStates[post.id] == true
+                                 ? "Show Less"
+                                 : "Show More"
                             )
                                 .bold()
                         }
@@ -97,6 +97,14 @@ struct ContentView: View {
             .preferredColorScheme(isDarkMode ? .dark : .light)
             .navigationTitle("Posts")
             .navigationBarItems(leading: darkModeToggle, trailing: sortButton)
+        }
+    }
+    
+    private func toggleLineLimit(for post: Post) {
+        if let currentLimitState = lineLimitStates[post.id] {
+            lineLimitStates[post.id] = !currentLimitState
+        } else {
+            lineLimitStates[post.id] = false
         }
     }
     
