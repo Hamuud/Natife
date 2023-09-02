@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct PostsResponse: Codable {
     let posts: [Post]
@@ -21,6 +22,8 @@ struct Post: Codable, Identifiable {
 }
 
 struct ContentView: View {
+    @AppStorage("isDarkMode") private var isDarkMode = false
+
     @State private var posts: [Post] = []
     @State private var selectedPost: Post?
     @State private var isExpanded = false
@@ -62,6 +65,7 @@ struct ContentView: View {
                                   ? "Collape"
                                   : "Expand"
                             )
+                                .bold()
                         }
                         .frame(
                             width: UIScreen.main.bounds.width / 1.5,
@@ -69,15 +73,13 @@ struct ContentView: View {
                             alignment: .center
                         )
                         .padding()
-                        .background(Color.black)
-                        .foregroundColor(.white)
+                        .background(Color.primary)
+                        .foregroundColor(Color.gray)
                         .cornerRadius(10)
                     }
                 }
                 .padding()
-                .background(Color.white)
-                .foregroundColor(Color.black)
-
+            
             }
             .sheet(item: $selectedPost) { post in
                 PostDetailView(post: post)
@@ -85,8 +87,9 @@ struct ContentView: View {
             .onAppear(perform: {
                 fetchPosts(fromURL: jsonURL)
             })
+            .preferredColorScheme(isDarkMode ? .dark : .light)
             .navigationTitle("Posts")
-            .navigationBarItems(trailing: sortButton)
+            .navigationBarItems(leading: darkModeToggle, trailing: sortButton)
         }
     }
     
@@ -103,6 +106,16 @@ struct ContentView: View {
             Button("Default") {
                 sortingOption = .default
             }
+        }
+    }
+    
+    var darkModeToggle: some View {
+        Button(action: {
+            isDarkMode.toggle()
+        }) {
+            Image(systemName: isDarkMode ? "moon.stars.fill" : "sun.max.fill")
+                .font(.title)
+                .foregroundColor(.primary)
         }
     }
     
