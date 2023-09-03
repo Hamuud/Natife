@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Foundation
 
 struct PostsResponse: Codable {
     let posts: [Post]
@@ -89,7 +90,7 @@ struct ContentView: View {
             
             }
             .sheet(item: $selectedPost) { post in
-                PostDetailView(post: post)
+                PostDetailes(post: post)
             }
             .onAppear(perform: {
                 fetchPosts(fromURL: jsonURL)
@@ -180,18 +181,83 @@ struct PostDetailView: View {
     }
 }
 
-extension ContentView.SortingOption {
-    var sortingComparator: (Post, Post) -> Bool {
-        switch self {
-        case .likes_count:
-            return { $0.likes_count > $1.likes_count }
-        case .publish_date:
-            return { $0.timeshamp > $1.timeshamp }
-        case .default:
-            return { $0.postId < $1.postId }
+struct PostData: Codable {
+    let post: PostDetail
+}
+
+struct PostDetail: Codable {
+    let postId: Int
+    let timeshamp: Int
+    let title: String
+    let text: String
+    let postImage: String
+    let likes_count: Int
+}
+
+struct PostDetailes: View {
+    @State private var postData: PostData?
+    let post: Post
+    
+    let secondsInADay: Double = 60 * 60 * 24
+    
+    var body: some View {
+        VStack {
+            if let post = postData?.post {
+                ZStack {
+                    Image(systemName: "photo")
+                        .data(url: post.postImage)
+                        .frame(width: 200, height: 100)
+                    VStack {
+                        Text(post.title)
+                            .font(.headline)
+                        Text(post.text)
+                            .font(Font.system(size: 12))
+                            .padding()
+                            .lineLimit(nil)
+                        /*Image(systemName: "photo")
+                            .data(url: post.postImage)
+                            .frame(maxWidth: 200, maxHeight: 100)
+                         */
+                        HStack {
+                            Text("❤️ \(String(post.likes_count))")
+                                .bold()
+                            
+                            Spacer()
+                            
+                            Text("\(Int(ceil((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
+                        }
+                    }
+                }
+            } else {
+                ProgressView("Loading...")
+            }
+        }
+        .padding()
+        .onAppear {
+            fetchData(id: post.postId)
         }
     }
+    func fetchData(id: Int) {
+        guard let url = URL(string: "https://raw.githubusercontent.com/anton-natife/jsons/master/api/posts/\(id).json") else {
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { (data, _, _) in
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let decodedData = try decoder.decode(PostData.self, from: data)
+                    DispatchQueue.main.async {
+                        postData = decodedData
+                    }
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }
+        }.resume()
+    }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
