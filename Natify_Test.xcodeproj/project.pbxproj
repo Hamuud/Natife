@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		627EE41E2AA47FE300C7774A /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627EE41D2AA47FE200C7774A /* ImageExtension.swift */; };
 		627EE4202AA480E600C7774A /* SortingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627EE41F2AA480E600C7774A /* SortingExtension.swift */; };
+		627EE4262AA4B65C00C7774A /* PostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627EE4252AA4B65C00C7774A /* PostResponse.swift */; };
 		62D5156D2AA099D8004E4D84 /* Natify_TestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D5156C2AA099D8004E4D84 /* Natify_TestApp.swift */; };
 		62D5156F2AA099D8004E4D84 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D5156E2AA099D8004E4D84 /* ContentView.swift */; };
 		62D515712AA099DC004E4D84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62D515702AA099DC004E4D84 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* Begin PBXFileReference section */
 		627EE41D2AA47FE200C7774A /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		627EE41F2AA480E600C7774A /* SortingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingExtension.swift; sourceTree = "<group>"; };
+		627EE4252AA4B65C00C7774A /* PostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponse.swift; sourceTree = "<group>"; };
 		62D515692AA099D8004E4D84 /* Natify_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Natify_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D5156C2AA099D8004E4D84 /* Natify_TestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Natify_TestApp.swift; sourceTree = "<group>"; };
 		62D5156E2AA099D8004E4D84 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		627EE4242AA4B64A00C7774A /* Struct */ = {
+			isa = PBXGroup;
+			children = (
+				627EE4252AA4B65C00C7774A /* PostResponse.swift */,
+			);
+			path = Struct;
+			sourceTree = "<group>";
+		};
 		62D515602AA099D8004E4D84 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +74,7 @@
 		62D5156B2AA099D8004E4D84 /* Natify_Test */ = {
 			isa = PBXGroup;
 			children = (
+				627EE4242AA4B64A00C7774A /* Struct */,
 				627EE41C2AA47FC200C7774A /* Extensions */,
 				62D5156C2AA099D8004E4D84 /* Natify_TestApp.swift */,
 				62D5156E2AA099D8004E4D84 /* ContentView.swift */,
@@ -153,6 +164,7 @@
 			files = (
 				627EE4202AA480E600C7774A /* SortingExtension.swift in Sources */,
 				62D5156F2AA099D8004E4D84 /* ContentView.swift in Sources */,
+				627EE4262AA4B65C00C7774A /* PostResponse.swift in Sources */,
 				627EE41E2AA47FE300C7774A /* ImageExtension.swift in Sources */,
 				62D5156D2AA099D8004E4D84 /* Natify_TestApp.swift in Sources */,
 			);

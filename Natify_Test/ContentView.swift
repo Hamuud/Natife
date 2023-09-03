@@ -63,27 +63,32 @@ struct ContentView: View {
                                 .bold()
                             
                             Spacer()
-                            
-                            Text("\(Int(ceil((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
+                            /*
+                             I didn't understand what time frame this variable is in (Seconds / minutes / milliseconds) so I decided to convert it from milliseconds to days and round to the nearest whole number
+                             */
+                            Text("\(Int(round((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
                         }
-                        Button(action: {
-                            toggleLineLimit(for: post)
-                        }) {
-                            Text(lineLimitStates[post.id] == true
-                                 ? "Show Less"
-                                 : "Show More"
+
+                        if shouldShowButton(post: post) {
+                            Button(action: {
+                                toggleLineLimit(for: post)
+                            }) {
+                                Text(lineLimitStates[post.id] == true
+                                     ? "Show Less"
+                                     : "Show More"
+                                )
+                                    .bold()
+                            }
+                            .frame(
+                                width: UIScreen.main.bounds.width / 1.5,
+                                height: 25,
+                                alignment: .center
                             )
-                                .bold()
+                            .padding()
+                            .background(Color.primary)
+                            .foregroundColor(Color.gray)
+                            .cornerRadius(10)
                         }
-                        .frame(
-                            width: UIScreen.main.bounds.width / 1.5,
-                            height: 25,
-                            alignment: .center
-                        )
-                        .padding()
-                        .background(Color.primary)
-                        .foregroundColor(Color.gray)
-                        .cornerRadius(10)
                     }
                 }
                 .padding()
@@ -109,6 +114,11 @@ struct ContentView: View {
         } else {
             lineLimitStates[post.id] = false
         }
+    }
+    
+    func shouldShowButton(post: Post) -> Bool {
+        let symbolCount = post.preview_text.split(separator: " ")
+        return symbolCount.count > 18
     }
     
     var sortButton: some View {
@@ -213,6 +223,7 @@ struct PostDetailes: View {
             fetchData(id: post.postId)
         }
     }
+    
     func fetchData(id: Int) {
         guard let url = URL(string: "https://raw.githubusercontent.com/anton-natife/jsons/master/api/posts/\(id).json") else {
             return
