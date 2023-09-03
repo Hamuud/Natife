@@ -42,13 +42,11 @@ sort posts by likes, date of publication.
 <img width="492" alt="LikesSort" src="https://github.com/Hamuud/Natify/assets/113451960/0f8fac65-c443-4877-8f05-66fa30c3ad31">
 
 * Show More Button:
-  
 <img width="492" alt="ShowMoreButton" src="https://github.com/Hamuud/Natify/assets/113451960/60932430-2b99-4f75-b206-b6fcc57bbc9d">
 
 * Post Preview Dark and Ligth:
-  <img width="492" alt="PostViewDark" src="https://github.com/Hamuud/Natify/assets/113451960/7f9412cc-3456-4c6a-ac31-1dfde5b10b8f">
-  <img width="492" alt="PostViewLigth" src="https://github.com/Hamuud/Natify/assets/113451960/6a28e561-5a98-4946-973c-86fd06f13d8a">
-  <img width="492" alt="PostLigthMode" src="https://github.com/Hamuud/Natify/assets/113451960/837e5556-ca1d-47a5-8926-711550cfee42">
+<img width="492" alt="PostLigthMode" src="https://github.com/Hamuud/Natify/assets/113451960/837e5556-ca1d-47a5-8926-711550cfee42">
+<img width="492" alt="PostViewDark" src="https://github.com/Hamuud/Natify/assets/113451960/7f9412cc-3456-4c6a-ac31-1dfde5b10b8f">
 
 ## License
 
