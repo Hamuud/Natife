@@ -90,7 +90,9 @@ struct ContentView: View {
             
             }
             .sheet(item: $selectedPost) { post in
-                PostDetailes(post: post)
+                ScrollView {
+                    PostDetailes(post: post)
+                }
             }
             .onAppear(perform: {
                 fetchPosts(fromURL: jsonURL)
@@ -159,28 +161,6 @@ struct ContentView: View {
     }
 }
 
-struct PostDetailView: View {
-    let post: Post
-    
-    var body: some View {
-        VStack {
-            Text(post.title)
-                .font(.title2)
-            
-            Divider()
-            
-            Text(post.preview_text)
-                .font(.body)
-                .bold()
-                .foregroundColor(Color.gray)
-            
-            Text("❤️ \(String(post.likes_count))")
-                .bold()
-        }
-        .padding()
-    }
-}
-
 struct PostData: Codable {
     let post: PostDetail
 }
@@ -203,36 +183,32 @@ struct PostDetailes: View {
     var body: some View {
         VStack {
             if let post = postData?.post {
-                ZStack {
+                VStack {
                     Image(systemName: "photo")
                         .data(url: post.postImage)
-                        .frame(width: 200, height: 100)
-                    VStack {
-                        Text(post.title)
-                            .font(.headline)
-                        Text(post.text)
-                            .font(Font.system(size: 12))
-                            .padding()
-                            .lineLimit(nil)
-                        /*Image(systemName: "photo")
-                            .data(url: post.postImage)
-                            .frame(maxWidth: 200, maxHeight: 100)
-                         */
-                        HStack {
-                            Text("❤️ \(String(post.likes_count))")
-                                .bold()
-                            
-                            Spacer()
-                            
-                            Text("\(Int(ceil((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
-                        }
+                        .resizable()
+                        .scaledToFill()
+                        .frame(minWidth: UIScreen.main.bounds.width, idealWidth: UIScreen.main.bounds.width, maxWidth: UIScreen.main.bounds.width, minHeight: UIScreen.main.bounds.height / 3, idealHeight: UIScreen.main.bounds.height / 3, maxHeight: UIScreen.main.bounds.height / 3, alignment: .bottom)
+                    Text(post.title)
+                        .font(.headline)
+                    Text(post.text)
+                        .padding()
+                        .lineLimit(nil)
+                    HStack {
+                        Text("❤️ \(String(post.likes_count))")
+                            .bold()
+                        
+                        Spacer()
+                        
+                        Text("\(Int(ceil((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
                     }
+                    .padding()
                 }
             } else {
                 ProgressView("Loading...")
             }
         }
-        .padding()
+        .padding(10)
         .onAppear {
             fetchData(id: post.postId)
         }
