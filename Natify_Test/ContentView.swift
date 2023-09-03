@@ -210,7 +210,7 @@ struct PostDetailes: View {
                         
                         Spacer()
                         
-                        Text("\(Int(ceil((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
+                        Text("\(Int(round((Double(post.timeshamp) / 1000) / secondsInADay))) day ago")
                     }
                     .padding()
                 }
